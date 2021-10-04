@@ -1,0 +1,14 @@
+#!/usr/bin/sh
+
+CONFIG_FILE="$HOME/.config/scripts/colorscript_wrapper"
+source  ${CONFIG_FILE}
+
+function _main() {
+    SCRIPT_LENGTH="$(echo ${SCRIPTS} | wc | awk '{print $2}')"
+    IFS=' ' read -ra ARRAY <<< "$SCRIPTS"
+    INDEX=$RANDOM%$SCRIPT_LENGTH
+
+    exec colorscript exec "${ARRAY[${INDEX}]}"
+}
+
+_main
