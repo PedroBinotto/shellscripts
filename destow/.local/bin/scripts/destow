@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+if [ -z "${1}" ]; then
+    # TODO: mensagem de ajuda
+    echo "USAGE: destow [TARGET DIR]";
+    exit 1;
+elif [ ! -d "${1}" ]; then
+    echo "destow: ${1}: Not a directory.";
+    exit 1;
+fi
+
+for PACKAGE in * ; do
+    stow -vt ~ $PACKAGE
+done
