@@ -1,14 +1,36 @@
 #!/usr/bin/bash
 
+#      _           _
+#   __| | ___  ___| |_ _____      __
+#  / _` |/ _ \/ __| __/ _ \ \ /\ / /
+# | (_| |  __/\__ \ || (_) \ V  V / 
+#  \__,_|\___||___/\__\___/ \_/\_/  
+
+PROGNAME=$(basename $0);
+
 if [ -z "${1}" ]; then
     # TODO: mensagem de ajuda
-    echo "USAGE: destow [TARGET DIR]";
+    echo "USAGE: ${PROGNAME} [TARGET DIR]";
     exit 1;
 elif [ ! -d "${1}" ]; then
-    echo "destow: ${1}: Not a directory.";
+    echo "${PROGNAME}: ${1}: Not a directory.";
     exit 1;
 fi
 
+TMP=$(mktemp);
+ 
 for PACKAGE in * ; do
-    stow -vt ~ $PACKAGE
+
+    # - STOW -> if unsuccessful bc target already exists:
+    #   THEN move target to "target.old"
+    #   - REATTEMPT STOW ONCE
+    # LOG ERRORS
+
+    OUT=$(echo 'lol'>$TMP);
+    OUT=$(stow -nvt ~ $PACKAGE>$TMP);
+    echo "<~"
+    cat "${TMP}"
+    echo "~>"
+    # [[ $OUT =~ ".*existing target is neighter a link nor directory:.*" ]] && echo "True"
 done
+
