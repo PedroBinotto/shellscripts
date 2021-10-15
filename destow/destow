@@ -1,0 +1,58 @@
+#!/usr/bin/bash
+
+PROGNAME=$(basename $0);
+
+NC='\033[0m'
+YELLOW='\033[1;33m'
+GREEN='\033[1;32m'
+BLUE='\033[0;34m'
+RED='\033[1;31m'
+
+if [ -z "${1}" ]; then
+    # TODO: mensagem de ajuda
+    echo "USAGE: ${PROGNAME} [TARGET DIR]";
+    exit 1;
+elif [ ! -d "${1}" ]; then
+    echo "${PROGNAME}: ${1}: Not a directory.";
+    exit 1;
+fi
+
+cat << "EOF"
+     _           _
+  __| | ___  ___| |_ _____      __
+ / _` |/ _ \/ __| __/ _ \ \ /\ / /
+| (_| |  __/\__ \ || (_) \ V  V /
+ \__,_|\___||___/\__\___/ \_/\_/
+
+EOF
+
+while true; do
+    echo 'Packages to be stowed:'
+    for PACKAGE in * ; do
+        printf "${BLUE}${PACKAGE}${NC}\n"
+    done
+    read -p "Proceed? (y/n) " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit 0;;
+        * ) echo "Please answer y/n.";;
+    esac
+done
+
+SUCCESS=0 
+FAILURE=0 
+
+for PACKAGE in * ; do
+    if [ stow -nvt ~ $PACKAGE ]; then
+        # SUCCESS++
+        printf "${GREEN}${PROGNAME}${NC}: package [${PACKAGE}] stowed succesfully.\n"
+    else
+        # FAILURE++
+        printf "${YELLOW}${PROGNAME}${NC}: failed to stow package [${RED}${PACKAGE}${NC}].\n"
+    fi
+done
+
+# Print "X packages stowed succesfully - X packages failed: pkg1, pkg2 ..."
+
+exit 0
+

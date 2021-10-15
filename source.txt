@@ -1,0 +1,8 @@
+Stow scripts to .local/bin/ or /usr/bin/ (as root) by running:
+
+stow -vSt ~/.local/bin *
+or
+sudo stow -vSt ~/usr/bin *
+
+add /.local/bin to $PATH if required.
+
