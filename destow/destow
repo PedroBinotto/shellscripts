@@ -54,13 +54,13 @@ for PACKAGE in * ; do
 done
 
 
-printf "\n\033[1m${#SUCCESS[@]}${NC} packages stowed succesfully.\n"
+printf "\n\033[1m${#SUCCESS[@]}${NC} packages stowed succesfully;\n"
 for PACKAGE in ${SUCCESS[*]} ; do
     printf "${GREEN}${PACKAGE}${NC}\n"
 done
 printf "\n"
 
-printf "\033[1m${#FAILURE[@]}${NC} packages failed to be stowed.\n"
+printf "\033[1m${#FAILURE[@]}${NC} packages failed to be stowed;\n"
 for PACKAGE in ${FAILURE[*]} ; do
     printf "${RED}${PACKAGE}${NC}\n"
 done
