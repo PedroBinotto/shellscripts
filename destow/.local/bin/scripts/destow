@@ -6,7 +6,13 @@
 # | (_| |  __/\__ \ || (_) \ V  V / 
 #  \__,_|\___||___/\__\___/ \_/\_/  
 
+
 PROGNAME=$(basename $0);
+
+NC='\033[0m'
+YELLOW='\033[1;33m'
+GREEN='\033[1;32m'
+RED='\033[1;31m'
 
 if [ -z "${1}" ]; then
     # TODO: mensagem de ajuda
@@ -17,20 +23,15 @@ elif [ ! -d "${1}" ]; then
     exit 1;
 fi
 
-TMP=$(mktemp);
+# Add warning message
  
 for PACKAGE in * ; do
-
-    # - STOW -> if unsuccessful bc target already exists:
-    #   THEN move target to "target.old"
-    #   - REATTEMPT STOW ONCE
-    # LOG ERRORS
-
-    OUT=$(echo 'lol'>$TMP);
-    OUT=$(stow -nvt ~ $PACKAGE>$TMP);
-    echo "<~"
-    cat "${TMP}"
-    echo "~>"
-    # [[ $OUT =~ ".*existing target is neighter a link nor directory:.*" ]] && echo "True"
+    stow -nvt ~ $PACKAGE &&
+        printf "${GREEN}${PROGNAME}${NC}: package [${PACKAGE}] stowed succesfully\n" ||
+        printf "${YELLOW}${PROGNAME}${NC}: failed to stow package [${RED}${PACKAGE}${NC}]\n"
 done
+
+# Print "X packages stowed succesfully - X packages failed: pkg1, pkg2 ..."
+
+exit 0
 
