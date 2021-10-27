@@ -43,7 +43,7 @@ declare -a SUCCESS
 declare -a FAILURE
 
 for PACKAGE in * ; do
-    stow -nvt ~ ${PACKAGE}
+    stow -vt ~ ${PACKAGE}
     if [ $? == 0 ]; then
         SUCCESS+=(${PACKAGE})
         printf "${GREEN}${PROGNAME}${NC}: package [${PACKAGE}] stowed succesfully.\n"
