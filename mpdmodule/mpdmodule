@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 if ! mpc >/dev/null 2>&1; then
   echo Server offline
   exit 1
@@ -10,3 +9,4 @@ else
   echo Not playing
 fi
 mpc idle >/dev/null
+
