@@ -1,0 +1,12 @@
+#!/usr/bin/sh
+
+PROGNAME=$(basename $0);
+
+if [ -z "${1}" ]; then
+    echo "USAGE: ${PROGNAME} [TARGET]";
+    exit 1;
+fi
+
+echo ${1};
+pdftotext -layout "${1}" - | less
+
