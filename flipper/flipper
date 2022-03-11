@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PROGNAME=$(basename $0);
+
+if  (("$#" < 2)) || (("$#" > 3)); then
+    echo "USAGE: ${PROGNAME} <MESSAGE 1> <MESSAGE 2> [TIME INTERVAl {default=1}]";
+    exit 1;
+fi
+
+INTERVAL=$([ "$3" ] && echo "$3" || echo 1)
+re='^[0-9]+$'
+
+if ! [[ $INTERVAL =~ $re ]] ; then
+   echo "error: '${3}': Not a number" >&2; exit 1
+   exit 1
+fi
+
+while true
+do
+    echo ${1}
+    sleep ${INTERVAL}
+    echo ${2}
+    sleep ${INTERVAL}
+done

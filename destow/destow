@@ -10,7 +10,7 @@ RED='\033[1;31m'
 
 if [ -z "${1}" ]; then
     # TODO: mensagem de ajuda
-    echo "USAGE: ${PROGNAME} [TARGET DIR]";
+    echo "USAGE: ${PROGNAME} <TARGET DIR>";
     exit 1;
 elif [ ! -d "${1}" ]; then
     echo "${PROGNAME}: ${1}: Not a directory.";
