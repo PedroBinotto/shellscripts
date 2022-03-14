@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cat << EOF
+
 Ctrl-f ........................................................ sessionizer
 
 Alt-a ..... -> sessionizer ... ~/Projetos/bridge/sgtes-residencias/frontend
@@ -17,5 +18,6 @@ piconfig .. -> \$EDITOR ......................... ~/.config/picom/picom.conf
 emacsconfig -> \$EDITOR ........................................... ~/.emacs
 music ............................................................. ncmpcpp
 :q ................................................................... exit
+
 EOF
 
