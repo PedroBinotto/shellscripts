@@ -8,8 +8,12 @@ fi
 if [[ -z $selected ]]; then
     exit 0
 fi
-selected_name=$(basename "$selected" | tr . _)
+
+dir_name=$(dirname "$selected" | xargs basename | tr / _)
+base_name=$(basename "$selected" | tr . _)
+selected_name="${dir_name}_${base_name}"
 tmux_running=$(pgrep tmux)
+
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     tmux new-session -s $selected_name -c $selected
     exit 0
