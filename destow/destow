@@ -8,12 +8,22 @@ GREEN='\033[1;32m'
 BLUE='\033[0;34m'
 RED='\033[1;31m'
 
-if [ -z "${1}" ]; then
-    # TODO: mensagem de ajuda
-    echo "USAGE: ${PROGNAME} <TARGET DIR>";
+while getopts "fs:t:h" o; do case "${o}" in
+    f) force=true ;;
+    s) srcdir=${OPTARG} || exit 1 ;;
+    t) targetdir=${OPTARG} || exit 1 ;;
+    h) echo "USAGE: ${PROGNAME} [-f: force] -s <SOURCE DIR> -t <TARGET DIR>" && exit 0;;
+    *) printf "Invalid option: -%s\\n" "$OPTARG" && exit 1 ;;
+esac done
+
+if [ -z "${srcdir}" ] || [ -z "${targetdir}"]; then
+    echo "USAGE: ${PROGNAME} [-f: force] -s <SOURCE DIR> -t <TARGET DIR>";
     exit 1;
-elif [ ! -d "${1}" ]; then
-    echo "${PROGNAME}: ${1}: Not a directory.";
+elif [ ! -d "${srcdir}" ]; then
+    echo "${PROGNAME}: ${srcdir}: Not a directory.";
+    exit 1;
+elif [ ! -d "${targetdir}" ]; then
+    echo "${PROGNAME}: ${targetdir}: Not a directory.";
     exit 1;
 fi
 
@@ -28,22 +38,26 @@ EOF
 
 while true; do
     echo 'Packages to be stowed:'
-    for PACKAGE in * ; do
+    for PACKAGE in ${srcdir}/*/ ; do
         printf "${BLUE}${PACKAGE}${NC}\n"
     done
-    read -p "Proceed? (y/n) " yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit 0;;
-        * ) echo "Please answer y/n.";;
-    esac
+
+    if [ -z "${force}" ]; then
+        read -p "Proceed? (y/n) " yn
+        case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) exit 0;;
+            * ) echo "Please answer y/n.";;
+        esac
+    fi
 done
 
 declare -a SUCCESS
 declare -a FAILURE
 
-for PACKAGE in * ; do
-    stow -vt ~ ${PACKAGE}
+for PACKAGE in ${srcdir}/*/ ; do
+    PACKAGENAME=$(echo ${PACKAGE} | tr -d './')
+    stow -vt "${targetdir}" "${PACKAGENAME}"
     if [ $? == 0 ]; then
         SUCCESS+=(${PACKAGE})
         printf "${GREEN}${PROGNAME}${NC}: package [${PACKAGE}] stowed succesfully.\n"
