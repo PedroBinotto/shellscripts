@@ -16,9 +16,8 @@ if [ $FILE_EXT != 'tex' ]; then
 fi;
 
 cd $(dirname $(realpath $FILE))
-rm -rf *.pdf *.log *.aux *.bbl
 xelatex $FILE
-bibtex $(echo "$FILE" | cut -f 1 -d '.'
+bibtex $(echo "$FILE" | cut -f 1 -d '.')
 xelatex $FILE
 xelatex $FILE
 
