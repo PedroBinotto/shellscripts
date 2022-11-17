@@ -9,9 +9,10 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-dir_name=$(dirname "$selected" | xargs basename | tr / _)
-base_name=$(basename "$selected" | tr . _)
-selected_name="${dir_name}_${base_name}"
+dir_name=$(basename $(dirname $(realpath "$selected")) | tr / _)
+base_name=$(basename $(realpath "$selected") | tr . _)
+
+selected_name="${dir_name}-${base_name}"
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
