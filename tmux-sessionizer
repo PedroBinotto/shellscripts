@@ -12,7 +12,7 @@ fi
 dir_name=$(basename $(dirname $(realpath "$selected")) | tr / _)
 base_name=$(basename $(realpath "$selected") | tr . _)
 
-selected_name="${dir_name}-${base_name}"
+selected_name=$(echo "${dir_name}-${base_name}" | tr . _)
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
