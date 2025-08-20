@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -euo pipefail
+
+default_script_name="post-checkout"
+
+usage() {
+    echo "Usage: sprout <branch> [-s <script>]"
+    echo "  <branch>   Branch name to check out"
+    echo "  -s         Script with actions to execute after checkout (default: $default_script_name)"
+    exit 1
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+fi
+
+branch="$1"
+shift
+
+script=""
+
+while getopts ":s:" opt; do
+    case "$opt" in
+        s) script="$OPTARG" ;;
+        *) usage ;;
+    esac
+done
+shift $((OPTIND -1))
+
+if ! base_dir=$(git rev-parse --show-toplevel 2>/dev/null); then
+    echo "Error: not inside a Git repository."
+    exit 1
+fi
+
+cd "$base_dir"
+
+if [[ -d "$branch" ]]; then
+    echo "$branch is already checked out in a neighbouring directory"
+    exit 0
+fi
+
+worktree_trunk=$(dirname "$base_dir")
+worktree_dir="$worktree_trunk/$branch"
+
+if [[ -z "$script" ]]; then
+    script="$worktree_trunk/$default_script_name"
+    echo "Using default: $script"
+fi
+
+git worktree add "$worktree_dir" "$branch"
+
+if [[ -f "$script" ]]; then
+    ( cd "$worktree_dir"; bash "$script" )
+else
+    echo "No script found at $script — skipping actions."
+fi

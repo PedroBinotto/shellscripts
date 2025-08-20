@@ -4,9 +4,9 @@ cat << EOF
 
 Ctrl-f ........................................................ sessionizer
 
-Alt-a ..... -> sessionizer ... ~/Projetos/bridge/sgtes-residencias/frontend
-Alt-s ..... -> sessionizer ................. ~/Projetos/bridge/pec/frontend
-Alt-j ..... -> sessionizer ............................. ~/Projetos/scripts
+Alt-a ..... -> sessionizer ... ~/projetos/bridge/sgtes-residencias/frontend
+Alt-s ..... -> sessionizer ................. ~/projetos/bridge/pec/frontend
+Alt-j ..... -> sessionizer ............................ ~/.dotfiles/scripts
 Alt-k ..... -> sessionizer .................................... ~/.dotfiles
 
 zshconfig . -> \$EDITOR ........................................... ~/.zshrc
