@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Pedro Binotto, 2025
+# Helper script to run custom code when adding a new branch to a git worktree repo
+
 set -euo pipefail
 
 default_script_name="post-checkout"

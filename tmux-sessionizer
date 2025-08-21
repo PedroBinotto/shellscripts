@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Pedro Binotto, 2025
+# Helper script to create tmux sessions for different projects
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else

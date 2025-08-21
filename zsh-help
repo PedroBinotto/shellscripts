@@ -1,22 +1,21 @@
 #!/bin/sh
 
+# Pedro Binotto, 2025
+# Print small help message concerning the keybinds and aliases set by
+# configuration script
+
 cat << EOF
 
 Ctrl-f ........................................................ sessionizer
 
 Alt-a ..... -> sessionizer ... ~/projetos/bridge/sgtes-residencias/frontend
 Alt-s ..... -> sessionizer ................. ~/projetos/bridge/pec/frontend
-Alt-j ..... -> sessionizer ............................ ~/.dotfiles/scripts
+Alt-j ..... -> sessionizer ....................... ~/.dotfiles/shellscripts
 Alt-k ..... -> sessionizer .................................... ~/.dotfiles
 
 zshconfig . -> \$EDITOR ........................................... ~/.zshrc
-i3config .. -> \$EDITOR ................................ ~/.config/i3/config
 kittyconfig -> \$EDITOR ......................... ~/.config/kitty/kitty.conf
-polyconfig  -> \$EDITOR ........................... ~/.config/polybar/config
 vimconfig . -> \$EDITOR ............................ ~/.config/nvim/init.vim
-piconfig .. -> \$EDITOR ......................... ~/.config/picom/picom.conf
-emacsconfig -> \$EDITOR ........................................... ~/.emacs
-music ............................................................. ncmpcpp
 :q ................................................................... exit
 
 EOF

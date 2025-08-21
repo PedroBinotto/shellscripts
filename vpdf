@@ -1,5 +1,8 @@
 #!/usr/bin/sh
 
+# Pedro Binotto, 2025
+# Read PDF document as plain text inside terminal pager
+
 PROGNAME=$(basename $0);
 
 if [ -z "${1}" ]; then
