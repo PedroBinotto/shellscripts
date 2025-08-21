@@ -48,7 +48,11 @@ if [[ -z "$script" ]]; then
     echo "Using default: $script"
 fi
 
-git worktree add "$worktree_dir" "$branch"
+if git show-ref --verify --quiet "refs/heads/$branch"; then
+  git worktree add "$worktree_dir" "$branch"
+else
+  git worktree add -b "$branch" "$worktree_dir" 
+fi
 
 if [[ -f "$script" ]]; then
     ( cd "$worktree_dir"; bash "$script" )
